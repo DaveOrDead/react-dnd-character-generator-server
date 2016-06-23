@@ -20,24 +20,24 @@ This is the backend for the React D&D character gen. This includes database call
 
 3. You’ll need to export the DATABASE_URL environment variable for your app to connect to it when running locally: `export DATABASE_URL=postgres:///$(whoami)`
 
-4. Pull the master database: `heroku pg:pull HEROKU_POSTGRESQL_VIOLET mylocaldb --app minutaur`  - this command will create a new local database named “mylocaldb” and then pull data from our master database. In order to prevent accidental data overwrites and loss, the local database must not exist. You will be prompted to drop an already existing local database before proceeding.  Feel free to name your local db whatever you like.
+4. Pull the master database: `heroku pg:pull HEROKU_POSTGRESQL_VIOLET mylocaldb --app APPNAME`  - this command will create a new local database named “mylocaldb” and then pull data from our master database. In order to prevent accidental data overwrites and loss, the local database must not exist. You will be prompted to drop an already existing local database before proceeding.  Feel free to name your local db whatever you like.
 
 ### Server
 
 1. Install [Node.js](http://nodejs.org/)
 
-2. `$ git clone https://github.com/DaveOrDead/react-dnd-character-generator-server` or clone your own fork
+2. `git clone https://github.com/DaveOrDead/react-dnd-character-generator-server` or clone your own fork
 
-3. Create a `.env` file in the server root folder.  This file may later contain passwords etc so DO NOT check it into git.  Change the first line to contain the name of your local database.  Generate a new API key on Stormpath dashboard and change the other credentials to match them.
+3. Create a `.env` file in the server root folder.  This file may later contain passwords etc so DO NOT check it into git.  Change the first line to contain the name of your local database.
 
-4. `$ cd` to wherever you cloned the repo
+4. `cd` to wherever you cloned the repo
 
-5. run `$ npm install`
+5. run `npm install`
 
-6. run `$ foreman start web`
+6. run `foreman start web`
 
 7. The server should now be running on [localhost:5000](http://localhost:5000/).
-There is nothing located at the root address / - You should get a response from [localhost:5000/colors](http://localhost:5000/colors)
+There is nothing located at the root address / - You should get a response from [localhost:5000/api/alignments](http://localhost:5000/api/alignments)
 
 ##### Windows users
 
@@ -48,22 +48,17 @@ npm install -g foreman
 nf start
 ```
 
-## Deploying to Heroku
+## Deployment
 
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
+The app is set to automatically deploy from the master branch to: [https://dnd-character-gen-server.herokuapp.com](https://dnd-character-gen-server.herokuapp.com)
 
 ## Directory Structure
 
 ```sh
 ├── api/
-│   ├── colors/
+│   ├── alignments/
 │   │   ├──  index.js
-│   │   │──  colors.endpoints.js
-│   │   └──  colors.spec.js
+│   │   └──  alignments.endpoints.js
 │   │
 │
 ├── config/

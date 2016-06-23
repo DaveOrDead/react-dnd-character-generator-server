@@ -1,9 +1,6 @@
 /**
  * GET     /alignments             ->  index
- * POST    /alignments             ->  create
  * GET     /alignments/:id         ->  read
- * PUT     /alignments/:id         ->  update
- * DELETE  /alignments/:id         ->  destroy
  */
 
 'use strict';
