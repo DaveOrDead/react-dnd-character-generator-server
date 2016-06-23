@@ -7,6 +7,6 @@
 module.exports = function(app) {
 
   //  Main api routes
-  app.use('/api/colors', require('./api/colors'));
+  app.use('/api/alignments', require('./api/alignments'));
 
 };

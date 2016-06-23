@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var endpoints = require('./colors.endpoints');
+var endpoints = require('./alignments.endpoints');
 var router = express.Router();
 
 
