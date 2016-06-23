@@ -8,7 +8,6 @@
 
 'use strict';
 
-var _ = require('lodash');
 var pg = require('pg');
 
 
