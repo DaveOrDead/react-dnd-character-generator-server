@@ -1,0 +1,29 @@
+{
+  "name": "react-character-gen-server",
+  "version": "0.0.1",
+  "description": "api for dnd stuff",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "~4.9.0",
+    "lodash": "~2.4.1",
+    "pg": "^4.1.1"
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daveordead/serreact-character-gen-serverver"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "scripts": {
+    "start": "node app.js"
+  },
+  "private": true,
+  "license": "Do not copy"
+}

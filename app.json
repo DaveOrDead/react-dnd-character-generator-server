@@ -1,0 +1,7 @@
+{
+  "name": "DND Char gen - Server",
+  "description": "Server side code for dnd character gen",
+  "repository": "https://github.com/DaveOrDead/react-dnd-character-generator-server/",
+  "logo": "",
+  "keywords": ["node", "express", "static"]
+}
