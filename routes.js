@@ -11,4 +11,6 @@ module.exports = function(app) {
   app.use('/api/races', require('./api/races'));
   app.use('/api/abilities', require('./api/abilities'));
   app.use('/api/classes', require('./api/classes'));
+  app.use('/api/skills', require('./api/skills'));
+
 };
