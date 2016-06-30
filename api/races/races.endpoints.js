@@ -23,20 +23,21 @@ exports.index = function(request, response) {
 };
 
 exports.read = function(request, response) {
-
     var race_id = request.params.id;
 
     // Get all people for race
-    var race_query =
-    `select r.id, r.name, ram.ability_id, ram.modifier,
-        (
-        select s.name as size
-        from LU_sizes s
-        where r.size = s.id
-        )
-    from LU_races r, race_ability_modifiers ram
-    where r.id = ram.race_id
-    and r.id = ${race_id}`;
+    var race_query = "select r.id, \
+    	r.name, ram.ability_id,  \
+    	ram.modifier, \
+        ( \
+        select s.name as size \
+        from LU_sizes s \
+        where r.size = s.id \
+        ) \
+    	from LU_races r,  \
+    	race_ability_modifiers ram \
+    	where r.id = ram.race_id \
+    	and r.id = '" + race_id + "'";
 
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query( race_query, function(err, result) {
@@ -44,12 +45,15 @@ exports.read = function(request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       // {
-       //     for (var i = 0, max = result.rows.length ; i < max; i++) {
-       //     	result[i]
-       //     }
+       {
+       		var res = result.rows;
+       		var combine_results = res[0];
 
-       	response.send(result.rows); }
+           for (var i = 0, max = res.length ; i < max; i++) {
+           		combine_results[res[i].ability_id] = res[i].modifier;
+           }
+
+       	response.send(combine_results); }
     });
   });
 };

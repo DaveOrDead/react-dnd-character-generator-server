@@ -6,5 +6,6 @@ var router = express.Router();
 
 
 router.get('/', endpoints.index);
+router.get('/:id', endpoints.read);
 
 module.exports = router;
