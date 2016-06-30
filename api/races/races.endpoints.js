@@ -28,7 +28,7 @@ exports.read = function(request, response) {
 
     // Get all people for race
     var race_query =
-    "select r.id, r.name, s.name as size, \
+    "select r.id, r.name, \
         ( \
         select s.name as size \
         from LU_sizes s \
