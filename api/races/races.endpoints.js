@@ -32,7 +32,7 @@ exports.read = function(request, response) {
         ( \
         select s.name as size \
         from LU_sizes s \
-        where r.size = s.id \
+        where r.size_id = s.id \
         ) \
         from LU_races r,  \
         race_ability_modifiers ram \
