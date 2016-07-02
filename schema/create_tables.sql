@@ -88,7 +88,7 @@ insert into LU_sizes values
 --
 drop table if exists LU_skills
 ;
-create table LU_skills (id varchar, name varchar, abilityId varchar, is_untrained boolean)
+create table LU_skills (id varchar, name varchar, ability_id varchar, is_untrained boolean)
 ;
 insert into LU_skills values
 ('sk1','Appraise', 'ability4', true),
