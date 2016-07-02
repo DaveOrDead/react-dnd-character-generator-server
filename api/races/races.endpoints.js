@@ -46,10 +46,16 @@ exports.read = function(request, response) {
                 console.error(err); response.send("Error " + err);
             } else {
                 var res = result.rows;
-                var combineResults = res[0];
+                var combineResults;
 
-                for (var i = 0, max = res.length ; i < max; i++) {
-                    combineResults[res[i].ability_id] = res[i].modifier;
+                if (res[0]) {
+                    combineResults = res[0];
+
+                    for (var i = 0, max = res.length ; i < max; i++) {
+                        combineResults[res[i].ability_id] = res[i].modifier;
+                    }
+                } else {
+                    combineResults = res;
                 }
 
                 response.send(combineResults);
