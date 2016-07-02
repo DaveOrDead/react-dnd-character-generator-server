@@ -45,14 +45,14 @@ exports.read = function(request, response) {
             if (err) {
                 console.error(err); response.send("Error " + err);
             } else {
-                // var res = result.rows;
-                // var combine_results = res[0];
+                var res = result.rows;
+                var combineResults = res[0];
 
-                //   for (var i = 0, max = res.length ; i < max; i++) {
-                //   		combine_results[res[i].ability_id] = res[i].modifier;
-                //   }
+                for (var i = 0, max = res.length ; i < max; i++) {
+                    combineResults[res[i].ability_id] = res[i].modifier;
+                }
 
-                response.send(result.rows);
+                response.send(combineResults);
             }
         });
     });
