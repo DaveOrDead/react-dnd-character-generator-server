@@ -371,6 +371,6 @@ insert into LU_class_levels values
 -- connect to DB with: heroku pg:psql --app dnd-character-gen-server
 -- \i [path/to]/schema/create_tables.sql
 --
--- heroku pg:pull DATABASE_URL dnddb --app dnd-character-gen-server                              ;
+-- LOCAL: heroku pg:pull DATABASE_URL dnddb --app dnd-character-gen-server                              ;
 -- heroku pg:reset HEROKU_POSTGRESQL_VIOLET --app minutaur
 -- heroku pg:push mylocaldb HEROKU_POSTGRESQL_VIOLET --app minutaur
