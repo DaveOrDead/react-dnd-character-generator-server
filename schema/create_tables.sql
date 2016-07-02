@@ -33,7 +33,7 @@ insert into LU_abilities values
 --
 drop table if exists LU_races
 ;--
-create table LU_races (id varchar primary key, name text, size text, speed text)
+create table LU_races (id varchar primary key, name text, size_id text, speed text)
 ;
 insert into LU_races values
 ('race1','Human', '500', '30ft'),
