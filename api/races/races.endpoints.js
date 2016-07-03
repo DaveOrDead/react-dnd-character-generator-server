@@ -51,9 +51,9 @@ exports.read = function(request, response) {
                     if (err) {
                         console.error(err); response.send("Error " + err);
                     } else {
-
+                        result1.rows[0].modifiers = {};
                         for (var i = 0, max = result2.rows.length; i < max; i++) {
-                            result1.rows[0][result2.rows[i].ability_id] = result2.rows[i].modifier;
+                            result1.rows[0].modifiers[result2.rows[i].ability_id] = result2.rows[i].modifier;
                         }
 
                         response.send(result1.rows);
