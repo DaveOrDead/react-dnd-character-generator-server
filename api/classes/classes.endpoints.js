@@ -25,11 +25,15 @@ exports.index = function(request, response) {
 
 exports.read = function(request, response) {
     var class_id = request.params.id;
+    var level_id = request.params.level || 'lvl1';
 
     // Get all people for class
-    var class_query = "select r.id, r.name, r.hit_die, r.initial_skill_modifier, r.level_skill_modifier \
-        from LU_classes r \
-        where r.id = '" + class_id + "'";
+    var class_query = "select r.id, r.name, r.hit_die, r.initial_skill_modifier, r.level_skill_modifier, \
+    cl.base_attack_bonus, cl.fortitude_save, cl.reflex_save, cl.will_save \
+        from LU_classes r, LU_class_levels cl \
+        where r.id = '" + class_id + "' \
+        and cl.class_id = '" + class_id + "' \
+        and cl.level_id = '" + level_id + "'";
 
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query(class_query, function(err, result1) {
