@@ -20,7 +20,7 @@ exports.index = function(request, response) {
     ( \
         select cl.name as class \
         from LU_classes cl \
-        where r.id = c.class_id \
+        where cl.id = c.class_id \
     ) \
     from characters c";
 
