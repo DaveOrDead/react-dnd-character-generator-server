@@ -385,7 +385,7 @@ create table characters (
 ;
 insert into characters values
 ('1234','Ragnar', 'image_3.png', 'lvl1', 'race1', 'c1', 'a2'),
-('1235','Boris', 'image_1.png', 'lvl1', 'race1', 'c1', 'a2')
+('1235','Boris', 'image_1.png', 'lvl1', 'race3', 'c3', 'a5')
 ;
 --
 
