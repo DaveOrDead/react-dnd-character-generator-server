@@ -369,8 +369,6 @@ insert into LU_class_levels values
 --
 --
 --
---
---
 drop table if exists characters
 ;--
 create table characters (
@@ -388,7 +386,28 @@ insert into characters values
 ('1235','Boris', 'image_1.png', 'lvl1', 'race3', 'c3', 'a5')
 ;
 --
-
+--
+--
+drop table if exists character_abilities
+;
+create table character_abilities (character_id varchar, ability_id varchar, value integer)
+;
+insert into character_abilities values
+('1234', 'ability1', 12),
+('1234', 'ability2', 13),
+('1234', 'ability3', 10),
+('1234', 'ability4', 10),
+('1234', 'ability5', 10),
+('1234', 'ability6', 11),
+('1235', 'ability1', 10),
+('1235', 'ability2', 12),
+('1235', 'ability3', 16),
+('1235', 'ability4', 12),
+('1235', 'ability5', 9),
+('1235', 'ability6', 6)
+;
+--
+--
 -- connect to DB with: heroku pg:psql --app dnd-character-gen-server
 -- \i [path/to]/schema/create_tables.sql
 --
