@@ -21,6 +21,11 @@ exports.index = function(request, response) {
         select cl.name as class \
         from LU_classes cl \
         where cl.id = c.class_id \
+    ), \
+    ( \
+        select l.name as level \
+        from LU_levels l \
+        where l.id = c.level_id \
     ) \
     from characters c";
 
