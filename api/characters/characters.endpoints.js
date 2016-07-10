@@ -45,7 +45,7 @@ exports.read = function(request, response) {
     var character_id = request.params.id;
 
     // Get all details for character
-    var getCharacterQuery = "select c.id, c.name, c.avatar, \
+    var getCharacterQuery = "select c.name, c.avatar, \
     ( \
         select r.name as race \
         from LU_races r \
