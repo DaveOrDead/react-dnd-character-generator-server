@@ -70,7 +70,7 @@ exports.read = function(request, response) {
       if (err)
        { console.error(err); response.send("Error " + err); }
       else
-       { response.send(result.rows); }
+       { response.send(result.rows[0]); }
     });
   });
 };
