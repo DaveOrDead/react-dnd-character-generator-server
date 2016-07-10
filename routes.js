@@ -13,5 +13,6 @@ module.exports = function(app) {
   app.use('/api/classes', require('./api/classes'));
   app.use('/api/skills', require('./api/skills'));
   app.use('/api/characters', require('./api/characters'));
+  app.use('/api/character_abilities', require('./api/character_abilities'));
 
 };

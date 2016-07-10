@@ -57,6 +57,11 @@ exports.read = function(request, response) {
         where cl.id = c.class_id \
     ), \
     ( \
+        select a.name as alignment \
+        from LU_alignments a \
+        where a.id = c.alignment_id \
+    ), \
+    ( \
         select l.name as level \
         from LU_levels l \
         where l.id = c.level_id \
