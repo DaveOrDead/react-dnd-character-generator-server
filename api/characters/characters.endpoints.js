@@ -62,7 +62,7 @@ exports.read = function(request, response) {
         where l.id = c.level_id \
     ) \
     from characters c \
-    where c.id = ='" + character_id + "'";
+    where c.id = '" + character_id + "'";
 
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query(getCharacterQuery, function(err, result) {
