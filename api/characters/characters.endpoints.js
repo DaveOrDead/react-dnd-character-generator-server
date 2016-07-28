@@ -27,7 +27,7 @@ const index = (request, response, next) => {
     req.getAll(request, response, next, query);
 };
 
-const index = (request, response, next) => {
+const read = (request, response, next) => {
 
     const params = [request.params.id];
 

@@ -5,7 +5,7 @@ const db = require('./connection');
 
 const getAll = (request, response, next, query, params = []) => {
 
-    db.any(query, ...params)
+    db.any(query, params)
         .then(data => {
             response.status(200)
                 .json({
@@ -20,7 +20,7 @@ const getAll = (request, response, next, query, params = []) => {
 
 const getOne = (request, response, next, query, params) => {
 
-    db.one(query, ...params)
+    db.one(query, params)
         .then(data => {
             response.status(200)
                 .json({
