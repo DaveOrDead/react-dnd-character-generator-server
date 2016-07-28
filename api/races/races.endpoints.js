@@ -12,7 +12,11 @@ const index = (request, response, next) => {
 
 const read = (request, response, next) => {
     const params = [request.params.id];
-    const query = `select r.id, r.name,
+    const query = `
+        select r.id, r.name, r.str, r.dex,
+        r.con, r.int, r.wis, r.cha, r.level_adjustment,
+        r.space, r.reach, r.combat, r.natural_armor, r.image,
+        r.racial_hit_dice_count,
         (
             select rs.name as size
             from race_size rs
@@ -29,23 +33,3 @@ module.exports = {
   index,
   read
 };
-
-//                 var modifierQuery = " \
-//                     select ram.ability_id, ram.modifier \
-//                     from race_ability_modifiers ram \
-//                     where ram.race_id ='" + race_id + "'";
-
-//                 client.query(modifierQuery, function(err, result2) {
-//                     done();
-//                     if (err) {
-//                         console.error(err); response.send("Error " + err);
-//                     } else {
-//                         result1.rows[0].modifiers = {};
-//                         for (var i = 0, max = result2.rows.length; i < max; i++) {
-//                             result1.rows[0].modifiers[result2.rows[i].ability_id] = result2.rows[i].modifier;
-//                         }
-
-//                         response.send(result1.rows);
-//                     }
-
-
