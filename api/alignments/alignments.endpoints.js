@@ -3,38 +3,18 @@
  * GET     /alignments/:id         ->  read
  */
 
-const db = require('../../connection');
+const req = require('../../requests');
 
-const index = (req, res, next) => {
+const index = (request, response, next) => {
+    const query = 'select * from lu_alignments';
+    req.getAll(request, response, next, query);
+};
 
-    db.any("select * from lu_alignments")
-        .then(data => {
-            res.status(200)
-                .json({
-                    status: 'success',
-                    message: 'Retrieved all alignments',
-                    data
-                });
-        })
-        .catch(err => next(err));
-    };
-
-
-const read = (req, res, next) => {
-
-    const alignmentId = req.params.id;
-
-    db.one('select * from lu_alignments where id = $1', alignmentId)
-        .then(data => {
-            res.status(200)
-                .json({
-                    status: 'success',
-                    message: 'Retrieved ONE alignment',
-                    data
-                });
-        })
-        .catch(err => next(err));
-    };
+const read = (request, response, next) => {
+    const params = [request.params.id];
+    const query = 'select * from lu_alignments where id = $1';
+    req.getOne(request, response, next, query, params);
+};
 
 
 module.exports = {
