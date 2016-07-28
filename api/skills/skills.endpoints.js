@@ -3,22 +3,14 @@
  * GET     /skills/:id         ->  read
  */
 
-'use strict';
+const req = require('../../requests');
 
-var pg = require('pg');
+const index = (request, response, next) => {
+    const query = 'select id, name, ability_id from lu_skills';
+    req.getAll(request, response, next, query);
+};
 
-
-// Get list of skills
-exports.index = function(request, response) {
-
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query("select id, name, ability_id from lu_skills", function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.send(result.rows); }
-    });
-  });
+module.exports = {
+  index
 };
 
