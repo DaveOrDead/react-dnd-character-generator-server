@@ -6,7 +6,7 @@
 const req = require('../../requests');
 
 const index = (request, response, next) => {
-    const query = 'select id, name from lu_races';
+    const query = 'select id, name from race where rulebook_id = 6';
     req.getAll(request, response, next, query);
 };
 
@@ -14,11 +14,11 @@ const read = (request, response, next) => {
     const params = [request.params.id];
     const query = `select r.id, r.name,
         (
-            select s.name as size
-            from LU_sizes s
-            where r.size_id = s.id
+            select rs.name as size
+            from race_size rs
+            where r.size_id = rs.id
         )
-        from LU_races r
+        from race r
         where r.id = $1`;
 
     req.getOne(request, response, next, query, params);
