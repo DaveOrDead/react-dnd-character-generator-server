@@ -4,13 +4,10 @@
   "description": "api for dnd stuff",
   "main": "app.js",
   "dependencies": {
-    "body-parser": "^1.12.4",
-    "express": "~4.9.0",
-    "lodash": "~2.4.1",
-    "pg": "^4.1.1"
-  },
-  "engines": {
-    "node": "0.12.2"
+    "bluebird": "^3.3.4",
+    "body-parser": "^1.13.2",
+    "express": "~4.13.1",
+    "pg-promise": "^3.2.3"
   },
   "repository": {
     "type": "git",
@@ -19,7 +16,8 @@
   "keywords": [
     "node",
     "heroku",
-    "express"
+    "express",
+    "postgres"
   ],
   "scripts": {
     "start": "node app.js"

@@ -2,12 +2,10 @@
  * Main application file
  */
 
-'use strict';
-
-var express = require('express');
+const express = require('express');
 
 // Setup server
-var app = express();
+const app = express();
 
 // Allow access across domains (CORS)
 app.use(function(req, res, next) {
@@ -20,7 +18,7 @@ app.use(function(req, res, next) {
 });
 
 // create server
-var server = require('http').createServer(app);
+const server = require('http').createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
 

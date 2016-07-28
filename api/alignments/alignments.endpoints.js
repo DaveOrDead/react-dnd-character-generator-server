@@ -3,22 +3,41 @@
  * GET     /alignments/:id         ->  read
  */
 
-'use strict';
+const db = require('../../connection');
 
-var pg = require('pg');
+const index = (req, res, next) => {
+
+    db.any("select * from lu_alignments")
+        .then(data => {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Retrieved all alignments',
+                    data
+                });
+        })
+        .catch(err => next(err));
+    };
 
 
-// Get list of alignments
-exports.index = function(request, response) {
+const read = (req, res, next) => {
 
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query("select * from lu_alignments", function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.send(result.rows); }
-    });
-  });
+    const alignmentId = req.params.id;
+
+    db.one('select * from lu_alignments where id = $1', alignmentId)
+        .then(data => {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Retrieved ONE alignment',
+                    data
+                });
+        })
+        .catch(err => next(err));
+    };
+
+
+module.exports = {
+  index,
+  read
 };
-
