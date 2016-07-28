@@ -1,9 +1,6 @@
-'use strict';
-
-var express = require('express');
-var endpoints = require('./character_abilities.endpoints');
-var router = express.Router();
-
+const express = require('express');
+const endpoints = require('./character_abilities.endpoints');
+const router = express.Router();
 
 
 router.get('/:id', endpoints.read);

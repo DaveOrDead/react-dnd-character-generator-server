@@ -24,6 +24,7 @@ const read = (request, response, next) => {
     req.getOne(request, response, next, query, params);
 };
 
+
 module.exports = {
   index,
   read

@@ -1,31 +1,19 @@
 /**
- * GET     /abilities             ->  index
- * GET     /abilities/:id         ->  read
+ * GET     /character_abilities/:id         ->  read
  */
 
-'use strict';
+const req = require('../../requests');
 
-var pg = require('pg');
+const read = (request, response, next) => {
+    const params = [request.params.id];
 
-
-// Get ability scores for character
-exports.read = function(request, response) {
-
-    var character_id = request.params.id;
-
-    // Get all details for character
-    var getCharacterAbilitiesQuery = "select ability_id, value \
-    from character_abilities \
-    where character_id = '" + character_id + "'";
-
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(getCharacterAbilitiesQuery, function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { response.send(result.rows); }
-    });
-  });
+    const query = `
+        select ability_id, value
+        from character_abilities
+        where character_id = $1`;
+    req.getOne(request, response, next, query, params);
 };
 
+module.exports = {
+  read
+};
