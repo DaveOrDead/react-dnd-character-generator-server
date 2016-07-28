@@ -21,6 +21,12 @@ const read = (request, response, next) => {
             select rs.name as size
             from race_size rs
             where r.size_id = rs.id
+        ),
+        (
+            select rsp.speed
+            from race_speed rsp
+            where rsp.speed_type_id = 9
+            and rsp.race_id = $1
         )
         from race r
         where r.id = $1`;
