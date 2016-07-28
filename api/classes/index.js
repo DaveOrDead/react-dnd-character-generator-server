@@ -1,8 +1,6 @@
-'use strict';
-
-var express = require('express');
-var endpoints = require('./classes.endpoints');
-var router = express.Router();
+const express = require('express');
+const endpoints = require('./classes.endpoints');
+const router = express.Router();
 
 
 router.get('/', endpoints.index);
