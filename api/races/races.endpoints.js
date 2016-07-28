@@ -3,64 +3,48 @@
 * GET     /races/:id         ->  read
 */
 
-'use strict';
+const req = require('../../requests');
 
-var pg = require('pg');
-
-
-// Get list of races
-exports.index = function(request, response) {
-
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        client.query("select id, name from lu_races", function(err, result) {
-            done();
-            if (err)
-                { console.error(err); response.send("Error " + err); }
-            else
-                { response.send(result.rows); }
-        });
-    });
+const index = (request, response, next) => {
+    const query = 'select id, name from lu_races';
+    req.getAll(request, response, next, query);
 };
 
-exports.read = function(request, response) {
-    var race_id = request.params.id;
+const read = (request, response, next) => {
+    const params = [request.params.id];
+    const query = `select r.id, r.name,
+        (
+            select s.name as size
+            from LU_sizes s
+            where r.size_id = s.id
+        )
+        from LU_races r
+        where r.id = $1`;
 
-    // Get all people for race
-    var race_query = "select r.id, r.name,\
-        ( \
-            select s.name as size \
-            from LU_sizes s \
-            where r.size_id = s.id \
-        ) \
-        from LU_races r \
-        where r.id = '" + race_id + "'";
-
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        client.query(race_query, function(err, result1) {
-            done();
-            if (err) {
-                console.error(err); response.send("Error " + err);
-            } else {
-                var modifierQuery = " \
-                    select ram.ability_id, ram.modifier \
-                    from race_ability_modifiers ram \
-                    where ram.race_id ='" + race_id + "'";
-
-                client.query(modifierQuery, function(err, result2) {
-                    done();
-                    if (err) {
-                        console.error(err); response.send("Error " + err);
-                    } else {
-                        result1.rows[0].modifiers = {};
-                        for (var i = 0, max = result2.rows.length; i < max; i++) {
-                            result1.rows[0].modifiers[result2.rows[i].ability_id] = result2.rows[i].modifier;
-                        }
-
-                        response.send(result1.rows);
-                    }
-                });
-            }
-        });
-    });
+    req.getOne(request, response, next, query, params);
 };
+
+module.exports = {
+  index,
+  read
+};
+
+//                 var modifierQuery = " \
+//                     select ram.ability_id, ram.modifier \
+//                     from race_ability_modifiers ram \
+//                     where ram.race_id ='" + race_id + "'";
+
+//                 client.query(modifierQuery, function(err, result2) {
+//                     done();
+//                     if (err) {
+//                         console.error(err); response.send("Error " + err);
+//                     } else {
+//                         result1.rows[0].modifiers = {};
+//                         for (var i = 0, max = result2.rows.length; i < max; i++) {
+//                             result1.rows[0].modifiers[result2.rows[i].ability_id] = result2.rows[i].modifier;
+//                         }
+
+//                         response.send(result1.rows);
+//                     }
+
 

@@ -1,8 +1,6 @@
-'use strict';
-
-var express = require('express');
-var endpoints = require('./races.endpoints');
-var router = express.Router();
+const express = require('express');
+const endpoints = require('./races.endpoints');
+const router = express.Router();
 
 
 router.get('/', endpoints.index);
