@@ -3,6 +3,7 @@
  * GET     /classes/:id         ->  read
  */
 
+const db = require('../../connection');
 const req = require('../../requests');
 
 const index = (request, response, next) => {
@@ -28,7 +29,37 @@ const read = (request, response, next) => {
         and ccv.rulebook_id = 6
         and cc.id = $1`;
 
-    req.getOne(request, response, next, query, params);
+    const query2 = `
+        select cs.skill_id
+        from character_class_variant_class_skills cs,
+        character_class_variant ccv
+        where cs.character_class_variant_id = ccv.character_class_id
+        and ccv.rulebook_id = 6
+        and ccv.character_class_id = $1;
+    `;
+
+        db.tx(t => {
+            return t.batch([
+                t.one(query, params),
+                t.any(query2, params)
+            ]);
+        })
+        // using .spread(function(query1, query2)) is best here, if supported;
+        .then(data => {
+            let res = data[0];
+            res.classSkills = [];
+
+            data[1].map((i) => {
+                res.classSkills.push(i.skill_id)
+            })
+
+            response.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Retrieved all',
+                    data: res
+                });
+        })
 };
 
 module.exports = {
@@ -36,8 +67,5 @@ module.exports = {
   read
 };
 
-// var classSkillQuery = " \
-//     select cs.skill_id from LU_class_skills cs \
-//     where cs.class_id ='" + class_id + "'";
 
 
