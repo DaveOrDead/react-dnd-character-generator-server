@@ -10,8 +10,8 @@ const read = (request, response, next) => {
     const query = `
         select ability_id, value
         from character_abilities
-        where character_id = $1`;
-    req.getOne(request, response, next, query, params);
+        where character_id = 2`;
+    req.getAll(request, response, next, query, params);
 };
 
 module.exports = {

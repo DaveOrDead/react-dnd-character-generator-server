@@ -7,23 +7,26 @@ const req = require('../../requests');
 
 const index = (request, response, next) => {
     const query =
-    `select c.id, c.name, c.avatar,
+    `select ch.id, ch.name, ch.avatar,
     (
         select r.name as race
-        from LU_races r
-        where r.id = c.race_id
+        from race r
+        where r.id = ch.race_id
     ),
     (
-        select cl.name as class
-        from LU_classes cl
-        where cl.id = c.class_id
+        select cc.name
+        from character_class cc,
+        character_class_variant ccv
+        where cc.id = ccv.character_class_id
+        and ccv.rulebook_id = 6
+        and cc.id = ch.class_id
     ),
     (
         select l.name as level
         from LU_levels l
-        where l.id = c.level_id
+        where l.id = ch.level_id
     )
-    from characters c`;
+    from characters ch`;
     req.getAll(request, response, next, query);
 };
 
@@ -32,30 +35,33 @@ const read = (request, response, next) => {
     const params = [request.params.id];
 
     const query = `
-    select c.name, c.avatar,
+    select ch.name, ch.avatar,
     (
         select r.name as race
-        from LU_races r
-        where r.id = c.race_id
+        from race r
+        where r.id = ch.race_id
     ),
     (
-        select cl.name as class
-        from LU_classes cl
-        where cl.id = c.class_id
+        select cc.name
+        from character_class cc,
+        character_class_variant ccv
+        where cc.id = ccv.character_class_id
+        and ccv.rulebook_id = 6
+        and cc.id = ch.class_id
     ),
     (
         select a.name as alignment
         from LU_alignments a
-        where a.id = c.alignment_id
+        where a.id = ch.alignment_id
     ),
     (
         select l.name as level
         from LU_levels l
-        where l.id = c.level_id
+        where l.id = ch.level_id
     )
-    from characters c
-    where c.id = $1`;
-    req.getOne(request, response, next, query);
+    from characters ch
+    where ch.id = $1`;
+    req.getOne(request, response, next, query, params);
 };
 
 

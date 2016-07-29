@@ -6,7 +6,7 @@
 const req = require('../../requests');
 
 const index = (request, response, next) => {
-    const query = 'select id, name, ability_id from lu_skills';
+    const query = 'select id, name, ability_id from lu_skills order by name';
     req.getAll(request, response, next, query);
 };
 
