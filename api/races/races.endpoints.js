@@ -18,9 +18,9 @@ const read = (request, response, next) => {
         r.space, r.reach, r.combat, r.natural_armor, r.image,
         r.racial_hit_dice_count,
         (
-            select rs.name as size
-            from race_size rs
-            where r.size_id = rs.id
+            select s.name as size
+            from LU_sizes s
+            where r.size_id = s.id
         ),
         (
             select rsp.speed
