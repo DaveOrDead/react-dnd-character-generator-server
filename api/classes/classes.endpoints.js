@@ -18,7 +18,7 @@ const index = (request, response, next) => {
 };
 
 const read = (request, response, next) => {
-    const params = [request.params.id, request.params.level || 'lvl1'];
+    const params = [request.params.id, request.params.level || 1];
 
     const query = `
         select cc.id, cc.name, ccv.hit_die,
@@ -35,8 +35,7 @@ const read = (request, response, next) => {
         character_class_variant ccv
         where cs.character_class_variant_id = ccv.character_class_id
         and ccv.rulebook_id = 6
-        and ccv.character_class_id = $1;
-    `;
+        and ccv.character_class_id = $1`;
 
         db.tx(t => {
             return t.batch([
@@ -45,21 +44,22 @@ const read = (request, response, next) => {
             ]);
         })
         // using .spread(function(query1, query2)) is best here, if supported;
-        .then(data => {
-            let res = data[0];
-            res.classSkills = [];
+        .spread((query1res, query2res) => {
 
-            data[1].map((i) => {
-                res.classSkills.push(i.skill_id)
+            query1res.classSkills = [];
+
+            query2res.map((i) => {
+                query1res.classSkills.push(i.skill_id)
             })
 
             response.status(200)
                 .json({
                     status: 'success',
                     message: 'Retrieved all',
-                    data: res
+                    data: query1res
                 });
         })
+        .catch(err => next(err));
 };
 
 module.exports = {
