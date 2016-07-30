@@ -44,10 +44,10 @@ const read = (request, response, next) => {
             ]);
         })
         .spread((q1res, q2res) => {
-            q1res.classSkills = [];
+            q1res.classSkills = {};
 
             q2res.map((i) => {
-                q1res.modifiers[i.skill_id] = true;
+                q1res.classSkills[i.skill_id] = true;
             })
 
             response.status(200)
