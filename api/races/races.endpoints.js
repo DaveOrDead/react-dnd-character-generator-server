@@ -25,14 +25,15 @@ const read = (request, response, next) => {
             from race_speed rsp
             where rsp.speed_type_id = 9
             and rsp.race_id = $1
+        ),
+        (
+            select s.name as size
+            from LU_sizes s
+            where r.size_id = s.id
         )
         from race r
         where r.id = $1`;
-        // (
-        //     select s.name as size
-        //     from LU_sizes s
-        //     where r.size_id = s.id
-        // ),
+
 
     const query2 = `
         select ability_id, modifier
@@ -46,10 +47,10 @@ const read = (request, response, next) => {
             ]);
         })
         .spread((q1res, q2res) => {
-            q1res.modifiers = [];
+            q1res.modifiers = {};
 
             q2res.map((i) => {
-                q1res.modifiers.push(i.skill_id)
+                q1res.modifiers[i.ability_id] = i.modifier;
             })
 
             response.status(200)
@@ -59,7 +60,7 @@ const read = (request, response, next) => {
                     data: q1res
                 });
         })
-        .catch(err => next(err));
+        .catch(err => console.log('err: ', err));
 };
 
 

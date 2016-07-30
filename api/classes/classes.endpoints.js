@@ -43,20 +43,18 @@ const read = (request, response, next) => {
                 t.any(query2, params)
             ]);
         })
-        // using .spread(function(query1, query2)) is best here, if supported;
-        .spread((query1res, query2res) => {
+        .spread((q1res, q2res) => {
+            q1res.classSkills = [];
 
-            query1res.classSkills = [];
-
-            query2res.map((i) => {
-                query1res.classSkills.push(i.skill_id)
+            q2res.map((i) => {
+                q1res.classSkills.push(i.skill_id)
             })
 
             response.status(200)
                 .json({
                     status: 'success',
                     message: 'Retrieved all',
-                    data: query1res
+                    data: q1res
                 });
         })
         .catch(err => next(err));
