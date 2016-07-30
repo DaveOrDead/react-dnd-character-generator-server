@@ -40,17 +40,28 @@ const read = (request, response, next) => {
         from race_abilities
         where race_id = $1`;
 
+    const query3 = `
+        select skill_id, ranks
+        from race_skill
+        where race_id = $1`;
+
     db.tx(t => {
             return t.batch([
                 t.one(query, params),
-                t.any(query2, params)
+                t.any(query2, params),
+                t.any(query3, params)
             ]);
         })
-        .spread((q1res, q2res) => {
+        .spread((q1res, q2res, q3res) => {
             q1res.modifiers = {};
+            q1res.raceSkillBonus = {};
 
             q2res.map((i) => {
                 q1res.modifiers[i.ability_id] = i.modifier;
+            })
+
+            q3res.map((i) => {
+                q1res.raceSkillBonus[i.skill_id] = i.ranks;
             })
 
             response.status(200)
