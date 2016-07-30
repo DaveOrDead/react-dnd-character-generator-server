@@ -33,7 +33,7 @@ const read = (request, response, next) => {
         select cs.skill_id
         from character_class_variant_class_skills cs,
         character_class_variant ccv
-        where cs.character_class_variant_id = ccv.character_class_id
+        where cs.character_class_variant_id = ccv.id
         and ccv.rulebook_id = 6
         and ccv.character_class_id = $1`;
 
