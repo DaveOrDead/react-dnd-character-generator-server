@@ -3,25 +3,28 @@
 * GET     /races/:id         ->  read
 */
 
+const db = require('../../connection');
 const req = require('../../requests');
 
 const index = (request, response, next) => {
-    const query = 'select id, name from race where rulebook_id = 6';
+    const query = `
+        select id, name
+        from race
+        where rulebook_id = 6`;
     req.getAll(request, response, next, query);
 };
 
+        // (
+        //     select s.name as size
+        //     from LU_sizes s
+        //     where r.size_id = s.id
+        // ),
 const read = (request, response, next) => {
     const params = [request.params.id];
     const query = `
-        select r.id, r.name, r.str, r.dex,
-        r.con, r.int, r.wis, r.cha, r.level_adjustment,
-        r.space, r.reach, r.combat, r.natural_armor, r.image,
-        r.racial_hit_dice_count,
-        (
-            select s.name as size
-            from LU_sizes s
-            where r.size_id = s.id
-        ),
+        select r.id, r.name,
+        r.space, r.reach, r.combat,
+        r.natural_armor, r.image,
         (
             select rsp.speed
             from race_speed rsp
@@ -31,7 +34,32 @@ const read = (request, response, next) => {
         from race r
         where r.id = $1`;
 
-    req.getOne(request, response, next, query, params);
+    const query2 = " \
+        select ability_id, modifier \
+        from race_abilities \
+        where race_id = $1";
+
+    db.tx(t => {
+            return t.batch([
+                t.one(query, params),
+                t.any(query2, params)
+            ]);
+        })
+        .spread((q1res, q2res) => {
+            q1res.modifiers = [];
+
+            q2res.map((i) => {
+                q1res.modifiers.push(i.skill_id)
+            })
+
+            response.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Retrieved all',
+                    data: q1res
+                });
+        })
+        .catch(err => next(err));
 };
 
 
