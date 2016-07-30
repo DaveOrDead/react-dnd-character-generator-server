@@ -37,18 +37,29 @@ const read = (request, response, next) => {
         and ccv.rulebook_id = 6
         and ccv.character_class_id = $1`;
 
+    const query3 = `
+        select base_attack_bonus,
+        fortitude_save,
+        reflex_save, will_save
+        from character_class_variant_class_levels
+        where class_id = 2
+        and level_id = 1`;
+
         db.tx(t => {
             return t.batch([
                 t.one(query, params),
-                t.any(query2, params)
+                t.any(query2, params),
+                t.one(query3, params)
             ]);
         })
-        .spread((q1res, q2res) => {
+        .spread((q1res, q2res, q3res) => {
             q1res.classSkills = {};
 
             q2res.map((i) => {
                 q1res.classSkills[i.skill_id] = true;
             })
+
+            q1res.bonuses = q3res;
 
             response.status(200)
                 .json({
