@@ -14,11 +14,6 @@ const index = (request, response, next) => {
     req.getAll(request, response, next, query);
 };
 
-        // (
-        //     select s.name as size
-        //     from LU_sizes s
-        //     where r.size_id = s.id
-        // ),
 const read = (request, response, next) => {
     const params = [request.params.id];
     const query = `
@@ -33,11 +28,16 @@ const read = (request, response, next) => {
         )
         from race r
         where r.id = $1`;
+        // (
+        //     select s.name as size
+        //     from LU_sizes s
+        //     where r.size_id = s.id
+        // ),
 
-    const query2 = " \
-        select ability_id, modifier \
-        from race_abilities \
-        where race_id = $1";
+    const query2 = `
+        select ability_id, modifier
+        from race_abilities
+        where race_id = $1`;
 
     db.tx(t => {
             return t.batch([
