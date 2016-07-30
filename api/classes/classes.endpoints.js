@@ -47,7 +47,7 @@ const read = (request, response, next) => {
             q1res.classSkills = [];
 
             q2res.map((i) => {
-                q1res.classSkills.push(i.skill_id)
+                q1res.modifiers[i.skill_id] = true;
             })
 
             response.status(200)
