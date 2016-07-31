@@ -8,11 +8,8 @@ const req = require('../../requests');
 
 const index = (request, response, next) => {
     const query = `
-        select cc.id, cc.name
-        from character_class_variant ccv,
-        character_class cc
-        where ccv.rulebook_id = 6
-        and cc.id = ccv.character_class_id
+        select id, name
+        from LU_classes
         order by name`;
     req.getAll(request, response, next, query);
 };
@@ -21,28 +18,22 @@ const read = (request, response, next) => {
     const params = [request.params.id, request.params.level || 1];
 
     const query = `
-        select cc.id, cc.name, ccv.hit_die,
-        ccv.skill_points, ccv.starting_gold
-        from character_class_variant ccv,
-        character_class cc
-        where cc.id = ccv.character_class_id
-        and ccv.rulebook_id = 6
-        and cc.id = $1`;
+        select id, name, hit_die,
+        skill_points, starting_gold
+        from LU_classes
+        where id = $1`;
 
     const query2 = `
-        select cs.skill_id
-        from character_class_variant_class_skills cs,
-        character_class_variant ccv
-        where cs.character_class_variant_id = ccv.id
-        and ccv.rulebook_id = 6
-        and ccv.character_class_id = $1`;
+        select skill_id
+        from class_skills
+        where class_id = $1`;
 
     const query3 = `
         select base_attack_bonus,
         fortitude_save,
         reflex_save, will_save
-        from character_class_variant_class_levels
-        where class_id = 2
+        from class_levels
+        where class_id = $1
         and level_id = 1`;
 
         db.tx(t => {
@@ -68,7 +59,7 @@ const read = (request, response, next) => {
                     data: q1res
                 });
         })
-        .catch(err => next(err));
+        .catch(err => console.log('err: ', err));
 };
 
 module.exports = {

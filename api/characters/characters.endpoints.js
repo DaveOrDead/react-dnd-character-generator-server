@@ -10,16 +10,13 @@ const index = (request, response, next) => {
     `select ch.id, ch.name, ch.avatar,
     (
         select r.name as race
-        from race r
+        from LU_races r
         where r.id = ch.race_id
     ),
     (
-        select cc.name
-        from character_class cc,
-        character_class_variant ccv
-        where cc.id = ccv.character_class_id
-        and ccv.rulebook_id = 6
-        and cc.id = ch.class_id
+        select c.name
+        from LU_classes c
+        where c.id = ch.class_id
     ),
     (
         select l.name as level
@@ -38,16 +35,13 @@ const read = (request, response, next) => {
     select ch.name, ch.avatar,
     (
         select r.name as race
-        from race r
+        from LU_races r
         where r.id = ch.race_id
     ),
     (
-        select cc.name
-        from character_class cc,
-        character_class_variant ccv
-        where cc.id = ccv.character_class_id
-        and ccv.rulebook_id = 6
-        and cc.id = ch.class_id
+        select c.name
+        from LU_classes c
+        where c.id = ch.class_id
     ),
     (
         select a.name as alignment

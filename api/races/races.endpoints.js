@@ -9,8 +9,8 @@ const req = require('../../requests');
 const index = (request, response, next) => {
     const query = `
         select id, name
-        from race
-        where rulebook_id = 6`;
+        from LU_races
+        order by name`;
     req.getAll(request, response, next, query);
 };
 
@@ -31,7 +31,7 @@ const read = (request, response, next) => {
             from LU_sizes s
             where r.size_id = s.id
         )
-        from race r
+        from LU_races r
         where r.id = $1`;
 
 
@@ -42,7 +42,7 @@ const read = (request, response, next) => {
 
     const query3 = `
         select skill_id, ranks
-        from race_skill
+        from race_skills
         where race_id = $1`;
 
     db.tx(t => {
