@@ -10,6 +10,7 @@ const index = (request, response, next) => {
     const query = `
         select id, name
         from LU_races
+        where rulebook_id = 6
         order by name`;
     req.getAll(request, response, next, query);
 };
