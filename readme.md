@@ -20,7 +20,7 @@ This is the backend for the React D&D character gen. This includes database call
 
 3. You’ll need to export the DATABASE_URL environment variable for your app to connect to it when running locally: `export DATABASE_URL=postgres:///$(whoami)`
 
-4. Pull the master database: `heroku pg:pull HEROKU_POSTGRESQL_VIOLET mylocaldb --app APPNAME`  - this command will create a new local database named “mylocaldb” and then pull data from our master database. In order to prevent accidental data overwrites and loss, the local database must not exist. You will be prompted to drop an already existing local database before proceeding.  Feel free to name your local db whatever you like.
+4. Pull the master database: `heroku pg:pull DATABASE_URL db_dnd --app dnd-character-gen-server`  - this command will create a new local database named “db_dnd” and then pull data from our master database. In order to prevent accidental data overwrites and loss, the local database must not exist. You will be prompted to drop an already existing local database before proceeding.  Feel free to name your local db whatever you like.
 
 ### Server
 
